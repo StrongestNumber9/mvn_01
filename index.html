@@ -3,7 +3,7 @@
     <script>
       (async () => {
         const { username, repo } = /^https:\/\/(?<username>[a-zA-Z0-9]+)\.github\.io\/(?<repo>[^\/]+)/.exec(window.location.href).groups;
-        const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/docs/?ref=gh-pages`);
+        const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/docs?ref=gh-pages`);
         const data = await response.json();
         let htmlString = '<ul>';
         for (let content of data) {

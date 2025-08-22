@@ -15,7 +15,7 @@ end note
 @enduml
 @startuml inline_umlgraph_2.svg
 class Dog {
-  + woof()
+  + bark()
 }
 
 Dog --> Cat : fluffiness

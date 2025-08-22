@@ -2,7 +2,7 @@ package com.teragrep.functions.mvn_01;
 
 /**
  * @class Dog
- * @brief Woofs
+ * @brief Woofs loudly
  *
  * @responsibilities
  * - Very fluffy

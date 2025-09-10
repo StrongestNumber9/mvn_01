@@ -1,3 +1,0 @@
-= gh-pages-aux
-
-Contains auxiliary files for GitHub pages deployment.

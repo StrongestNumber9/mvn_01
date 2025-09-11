@@ -1,1 +1,1 @@
-var branches = [ "overwritten-by-workflows" ]
+var branches = ["github_pages_indexing"]

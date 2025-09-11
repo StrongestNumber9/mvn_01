@@ -1,1 +1,1 @@
-var branches = ["github_pages_indexing", "add_gh_docs_link", "main", "example-javadoc-doxygen-project", "add_workflow_link", "war_docs", "update_war_docs_unzip", "testing_branch", "adds_spotbugs", "update_spotbugs_dogs", "spotbugs"]
+var branches = ["github_pages_indexing", "add_gh_docs_link", "main", "example-javadoc-doxygen-project", "add_workflow_link", "war_docs", "add_repository_name", "update_war_docs_unzip", "testing_branch", "adds_spotbugs", "update_spotbugs_dogs", "spotbugs"]

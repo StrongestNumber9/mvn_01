@@ -1,0 +1,139 @@
+= Example Javadoc & Doxygen project
+
+Example ready-to-run Java project that contains Javadoc and Doxygen.
+
+== Requirements
+
+Requires `doxygen`, `graphviz` and `plantuml` to be installed, `Doxyfile` to be present in the root directory and `pom.xml` to be configured with the required plugins.
+
+See the reference link:https://github.com/teragrep/mvn_01/blob/main/example-javadoc-doxygen-project/Doxyfile[Doxyfile] and link:https://github.com/teragrep/mvn_01/blob/main/example-javadoc-doxygen-project/pom.xml[pom.xml] for full details.
+
+Example Doxyfile:
+
+.Doxyfile
+[source]
+----
+# INPUT FILES
+INPUT                  = src/
+FILE_PATTERNS          = *.java
+RECURSIVE              = YES
+EXCLUDE_PATTERNS       = */src/test/*
+
+# OUTPUT
+OUTPUT_DIRECTORY       = $(OUTPUT_DIRECTORY)
+GENERATE_LATEX         = NO
+GENERATE_HTML          = YES
+
+# JAVA MODE
+OPTIMIZE_OUTPUT_JAVA   = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+JAVADOC_AUTOBRIEF      = YES
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = YES
+
+# DIAGRAMS
+HAVE_DOT               = YES
+DOT_NUM_THREADS        = 2
+CLASS_DIAGRAMS         = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+DOT_IMAGE_FORMAT       = svg
+
+# PLANTUML (optional)
+USE_PLANTUML           = YES
+PLANTUML_JAR_PATH      = /usr/share/plantuml/plantuml.jar
+PLANTUML_INCLUDE_PATH  = .
+PLANTUML_CFG_FILE      =
+
+# ALIASES (optional: adds headings like @responsibilities)
+ALIASES                += responsibilities="\par Responsibilities:"
+ALIASES                += collaborators="\par Collaborators:"
+
+# MARKDOWN
+MARKDOWN_SUPPORT       = YES
+----
+
+Requires the following additions in `pom.xml` to enable the javadoc. Notice the `source` version.
+
+.pom.xml
+[source,xml]
+----
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-javadoc-plugin</artifactId>
+    <version>3.5.0</version>
+    <executions>
+        <execution>
+        <id>attach-javadocs</id>
+        <goals>
+            <goal>jar</goal>
+        </goals>
+        <configuration>
+            <source>11</source>
+            <doclint>none</doclint>
+            <tags>
+                <tag>
+                    <name>startuml</name>
+                    <placement></placement>
+                    <head>startuml</head>
+                </tag>
+                <tag>
+                    <name>enduml</name>
+                    <placement></placement>
+                    <head>enduml</head>
+                </tag>
+                <tag>
+                    <name>class</name>
+                    <placement></placement>
+                    <head>class</head>
+                </tag>
+                <tag>
+                    <name>brief</name>
+                    <placement></placement>
+                    <head>brief</head>
+                </tag>
+                <tag>
+                    <name>responsibilities</name>
+                    <placement></placement>
+                    <head>responsibilities</head>
+                </tag>
+                <tag>
+                    <name>collaborators</name>
+                    <placement></placement>
+                    <head>collaborators</head>
+                </tag>
+            </tags>
+        </configuration>
+        </execution>
+    </executions>
+</plugin>
+----
+
+Requires the following additions in `pom.xml` to enable the creation of war file when publishing:
+
+.pom.xml
+[source,xml]
+----
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-war-plugin</artifactId>
+    <version>3.4.0</version>
+    <configuration>
+        <warSourceDirectory>target/docs</warSourceDirectory>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+    </configuration>
+</plugin>
+----
+
+== Usage
+
+Run `mvn -Dmaven.javadoc.failOnError=false javadoc:aggregate` to generate the javadoc. The results can be found in `target/site/apidocs/`
+
+Run `OUTPUT_DIRECTORY=target/doxygen doxygen Doxyfile` to generate Doxygen files. The results can be found in `target/doxygen/html`
+
+== Automatic usage from GitHub workflows
+
+See link:https://github.com/teragrep/mvn_01/tree/main/workflows#publish_pages_from_docsyaml[publish_pages_from_docs.yaml] in the workflows section.
+

@@ -4,7 +4,27 @@ The goal of this project is to be a minimal example demo for link:../workflows#u
 
 You can build the java artifacts with `mvn clean package` on repository root. This should give you `target/example-rpm-project.jar` file that will be packaged inside the `.rpm`.
 
-You can build the rpm by first changing to the `rpm` directory with `cd rpm/` and then running `mvn clean package -f rpm.pom.xml`. This will create an `.rpm` file under `target/rpm/com.teragrep-example-rpm-project/RPMS/noarch/` that contains the java artifact and any files under `aux/` directory.
+You can build the `.rpm` by first changing to the `rpm` directory with `cd rpm/` and then running the following commands:
+.Creating a RPM with necessary GPG-signing secrets
+[source]
+----
+export RPM_SIGNING_PASSPHRASE="Replace-With-Your-GPG-Passphrase";
+export RPM_SIGNING_KEYNAME="Replace-With-Your-GPG-Keyname";
+mvn clean package -f rpm.pom.xml
+----
+
+This will create and sign a `.rpm` file under `target/rpm/com.teragrep-example-rpm-project/RPMS/noarch/` that contains the java artifact and any files under `aux/` directory.
+
+You can verify it has been properly signed with the following command: `rpm --query --package --info path/to/the/example-rpm-project.rpm`
+
+It can warn about `NOKEY` if created GPG key is not imported to the system.
+
+.Partial output of `rpm --query --package --info example-rpm-project.rpm`
+[source]
+----
+Signature   :
+              RSA/SHA512, Fri 20 Feb 2026 10:18:21 AM EET, Key ID abcdef1234567890
+----
 
 You can observe the contents of the produced `.rpm` with the following command: `rpm --query --package --list --verbose path/to/the/example-rpm-project.rpm`.
 

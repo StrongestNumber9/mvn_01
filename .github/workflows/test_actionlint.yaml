@@ -7,4 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Run actionlint
-        run: docker run --rm -v $(pwd)/workflows:/repo --workdir /repo rhysd/actionlint:latest -color
+        run:
+          for workflow in ci coverity publish_pages_from_docs upload_release_github_attachment upload_release_github_packages upload_release_maven_central; do
+            docker run --rm -v $(pwd)/workflows:/repo --workdir /repo rhysd/actionlint:latest -color /repo/${workflow}.yaml;
+          done;
+            

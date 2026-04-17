@@ -6,7 +6,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Check workflow files
-        uses: docker://rhysd/actionlint:latest
-        with:
-          args: -color
+      - name: Run actionlint
+        run: docker run --rm -v $(pwd)/workflows:/repo --workdir /repo rhysd/actionlint:latest -color
